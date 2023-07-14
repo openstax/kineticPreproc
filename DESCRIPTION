@@ -1,0 +1,13 @@
+Package: kineticPreproc
+Type: Package
+Title: Kinetic Qualtrics Data Preprocessor 
+Version: 0.1.0
+Author: Debshila Basu Mallick
+Maintainer: Debshila Basu Mallick <debshila@rice.edu>
+Description: This package reads in OpenStax Kinetic activity data from the Qualtrics API and preprocesses it to remove minor respondents, non-consenting respondents, identifying information, and test cases. 
+    It extracts the Qualtrics survey questions and related metadata.
+    It also creates summary statistics for researchers to guide their analytic scripts using simulated data on the Kinetic Secure Enclaves. 
+License: `use_mit_license()`
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
