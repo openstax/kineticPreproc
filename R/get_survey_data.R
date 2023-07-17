@@ -18,7 +18,7 @@ get_survey_data <- function(selected_kinetic_survey_kwd = "Kinetic-Demographic")
         filter(grepl("Kinetic", name))
 
     # Select a survey
-    survey_id <<- kinetic_surveys %>%
+    survey_id <- kinetic_surveys %>%
         filter(grepl(selected_kinetic_survey_kwd, name)) %>%
         select(id) %>%
         unlist(use.names = FALSE)
@@ -27,7 +27,8 @@ get_survey_data <- function(selected_kinetic_survey_kwd = "Kinetic-Demographic")
                 ". Please save this as a variable."))
 
     # Get survey data
-    survey_data <- fetch_survey(surveyID = survey_id, verbose = FALSE)
+    survey_data <- fetch_survey(surveyID = survey_id, verbose = FALSE) %>%
+        mutate(survey_id = survey_id)
 
     # setClass("Qualtrics_info",
     #          representation = (surveys = "dataframe", survey_id = "character", survey_data = "dataframe"))
