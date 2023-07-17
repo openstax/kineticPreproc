@@ -7,8 +7,11 @@ It includes the following functions visible to the end user that supports all th
 
 ## Install Packages
 
-`make_packages_available(packages_needed = c("qualtRics", "tidyverse"))`
+`make_packages_available(packages_needed = c("qualtRics", "tidyverse", "devtools))`
 
+## To install kineticPreproc Package
+
+`install_github(openstax/kineticPreproc)`
 
 ## Connecting to Qualtrics
 `qualtrics_cred_file <- "~/Documents/GitHub/research-kinetic-pipeline/qualtrics_cred.txt"`
