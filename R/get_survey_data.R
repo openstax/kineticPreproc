@@ -10,6 +10,7 @@
 #' @examples
 #' get_survey_data(selected_kinetic_survey_kwd = "Kinetic-Demographic")
 get_survey_data <- function(selected_kinetic_survey_kwd = "Kinetic-Demographic"){
+    require(qualtRics)
     # Get all surveys
     surveys <- all_surveys()
 
