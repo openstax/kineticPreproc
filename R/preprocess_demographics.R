@@ -13,7 +13,7 @@
 preprocess_demographics <- function(demographics_df){
     require(excluder)
     qualtrics_demographics_clean <- demographics_df %>%
-        mutate(date_recorded = as.Date(RecordedDate))
+        mutate(date_recorded = as.Date(RecordedDate)) %>%
         exclude_progress() %>%
         exclude_preview() %>%
         exclude_duplicates(id_col = "research_id", dupl_location = FALSE) %>%
