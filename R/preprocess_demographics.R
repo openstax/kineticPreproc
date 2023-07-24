@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples preprocess_qualtrics_df("./Kinetic_data.csv")
-preprocess_demographics_df <- function(demographics_df){
+preprocess_demographics <- function(demographics_df){
     require(excluder)
     qualtrics_demographics_clean <- demographics_df %>%
         date_recorded = as.Date(RecordedDate)
