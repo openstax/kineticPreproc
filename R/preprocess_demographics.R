@@ -4,7 +4,7 @@
 #' to remove minors, non-consents, identifying information, previews, test accounts,
 #' incomplete responses, and uninformative columns.
 #'
-#' @param qualtrics_df_name substitute this with the qualtrics dataframe name that you want to analyze
+#' @param demographics_df substitute this with the qualtrics dataframe name that you want to analyze
 #'
 #' @return Opens the dataframe viewer and returns a clean dataframe without the above fields and cases.
 #' @export
@@ -13,7 +13,7 @@
 preprocess_demographics <- function(demographics_df){
     require(excluder)
     qualtrics_demographics_clean <- demographics_df %>%
-        date_recorded = as.Date(RecordedDate)
+        mutate(date_recorded = as.Date(RecordedDate))
         exclude_progress() %>%
         exclude_preview() %>%
         exclude_duplicates(id_col = "research_id", dupl_location = FALSE) %>%
