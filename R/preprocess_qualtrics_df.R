@@ -28,6 +28,7 @@ preprocess_qualtrics_df <- function(qualtrics_df){
        qualtrics_df_clean <- qualtrics_df_clean %>%
            mutate(age = as.numeric(age)) %>%
            filter(age>17)
+       return(qualtrics_df_clean)
    }
 
     glimpse(qualtrics_df_clean)
