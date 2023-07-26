@@ -9,7 +9,7 @@
 #' @return Opens the dataframe viewer and returns a clean dataframe without the above fields and cases.
 #' @export
 #'
-#' @examples preprocess_qualtrics_df("./Kinetic_data.csv")
+#' @examples preprocess_demographics("./Kinetic_data.csv")
 preprocess_demographics <- function(demographics_df){
     require(excluder)
     qualtrics_demographics_clean <- demographics_df %>%
