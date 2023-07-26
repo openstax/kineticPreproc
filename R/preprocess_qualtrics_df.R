@@ -21,14 +21,13 @@ preprocess_qualtrics_df <- function(qualtrics_df){
         filter(is_testing == FALSE) %>%
         filter(consent == TRUE)
     # To deal with different kinds of age responses
-   sum(grepl("18 or Older", qualtrics_df_clean$age)) > 0{
+   if(sum(grepl("18 or Older", qualtrics_df_clean$age)) > 0){
        qualtrics_df_clean <- qualtrics_df_clean  %>%
            filter(age == "18 or Older")
    } else {
        qualtrics_df_clean <- qualtrics_df_clean %>%
            mutate(age = as.numeric(age)) %>%
            filter(age>17)
-       return(qualtrics_df_clean)
    }
 
     glimpse(qualtrics_df_clean)
