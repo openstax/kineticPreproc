@@ -24,13 +24,16 @@ preprocess_qualtrics_df <- function(qualtrics_df){
    if(sum(grepl("18 or Older", qualtrics_df_clean$age)) > 0){
        qualtrics_df_clean <- qualtrics_df_clean  %>%
            filter(age == "18 or Older")
+       print(unique(qualtrics_df_clean$age))
    } else {
        qualtrics_df_clean <- qualtrics_df_clean %>%
-           mutate(age = as.numeric(age)) %>%
-           filter(age>17)
+           mutate(age = 2022 - as.numeric(year),
+                  age = ifelse(between(age, 10, 80), age, NA)) %>%
+           filter(age > 17)
+       print(unique(qualtrics_df_clean$age))
    }
 
-    glimpse(qualtrics_df_clean)
+    # glimpse(qualtrics_df_clean)
 
     return(qualtrics_df_clean)
 }
