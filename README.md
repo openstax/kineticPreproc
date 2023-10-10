@@ -6,6 +6,10 @@ This package helps pull data from Kinetic by connecting to the Qualtrics API, an
 It includes the following functions visible to the end user that supports all the required processes:
 
 ## Install Packages
+```
+install.packages("devtools")
+library(devtools)
+```
 
 `make_packages_available(packages_needed = c("qualtRics", "tidyverse", "devtools))`
 
