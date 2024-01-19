@@ -13,10 +13,13 @@
 preprocess_qualtrics_df <- function(qualtrics_df){
     qualtrics_df_clean <- qualtrics_df %>%
         mutate(date_recorded = as.Date(RecordedDate)) %>%
-        exclude_progress() %>%
-        exclude_preview() %>%
-        exclude_duplicates(id_col = "research_id", dupl_location = FALSE) %>%
-        deidentify() %>%
+        filter(is_testing == FALSE) %>%
+        filter(Finished) %>%
+        filter(!grepl("Spam|Survey Preview", Status))
+        # exclude_progress() %>%
+        # exclude_preview() %>%
+        # exclude_duplicates(id_col = "research_id", dupl_location = FALSE) %>%
+        # deidentify() %>%
         select(-matches('Name|DistributionChannel|Email|ExternalReference')) %>%
         filter(is_testing == FALSE) %>%
         filter(consent == TRUE)
