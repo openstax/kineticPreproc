@@ -20,15 +20,15 @@ library(kineticPreproc)
 make_packages_available(packages_needed = c("qualtRics", "tidyverse", "excluder"))
 
 ## Connecting to Qualtrics
-`qualtrics_cred_file <- "~/Documents/GitHub/research-kinetic-pipeline/qualtrics_cred.txt"`
+qualtrics_cred_file <- "~/Documents/GitHub/research-kinetic-pipeline/qualtrics_cred.txt"
 
-`connect_to_qualtrics(qualtrics_credential = qualtrics_cred_file)`
+connect_to_qualtrics(qualtrics_credential = qualtrics_cred_file)
 
 ## Getting data
-`demographics <- get_survey_data(selected_kinetic_survey_kwd = "Kinetic-Demographic")`
+demographics <- get_survey_data(selected_kinetic_survey_kwd = "Kinetic-Demographic")
 
 ## Preprocessing data
-`demographics_clean <- preprocess_demographics_df(demographics)`
+demographics_clean <- preprocess_demographics_df(demographics)
 
 ## Other examples (IDT)
 IDT <- get_survey_data(selected_kinetic_survey_kwd = "IDT")
