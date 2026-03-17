@@ -9,7 +9,7 @@ It includes the following functions visible to the end user that supports all th
 ```
 install.packages("devtools")
 library(devtools)
-library(devtools)
+
 
 ## To install kineticPreproc Package
 install_github("openstax/kineticPreproc")
