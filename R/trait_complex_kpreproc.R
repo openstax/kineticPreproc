@@ -4,9 +4,38 @@ pak::pak("openstax/kineticPreproc")
 
 library(kineticPreproc)
 
-make_packages_available(packages_needed = c("qualtRics", "tidyverse", "excluder"))
+make_packages_available(packages_needed = c("qualtRics", "tidyverse", "excluder", "kableExtra", "janitor"))
 
 qualtrics_cred_file <- "~/Documents/GitHub/research-kinetic-pipeline/qualtrics_cred.txt"
+
+connect_to_qualtrics(qualtrics_credential = qualtrics_cred_file)
+
+
+# Look at a single survey -------------------------------------------------
+
+sci_knowledge <- get_survey_data(selected_kinetic_survey_kwd = "Kinetic-Science Knowledge Survey")
+
+# Create a metadata for the file
+generate_survey_metadata_readme(sci_knowledge)
+
+# The preprocess script has bugs and I will fix later
+# For now, do your own preproc and share with me and I can integrate that into
+# a generalizable workflow
+# sci_k_clean <- sci_knowledge |>
+#     preprocess_qualtrics_df()
+
+
+goal_orientation <-  get_survey_data(selected_kinetic_survey_kwd = "Kinetic-Goal Orientation (Survey)")
+
+
+# Look at the full dataset
+trait_complex_surveys$`Kinetic-Goal Orientation (Survey` |> glimpse()
+
+# demographics
+demographics <- get_survey_data(selected_kinetic_survey_kwd = "Kinetic-Demographic")
+
+# Loop through all the trait complex relevant surveys ---------------------
+
 
 kinetic_study_names <- c(
     "Kinetic-Goal Orientation (Survey)",
@@ -25,77 +54,21 @@ kinetic_study_names <- c(
     "Kinetic-Science Knowledge Survey"
 )
 
-connect_to_qualtrics(qualtrics_credential = qualtrics_cred_file)
-
-demographics <- get_survey_data(selected_kinetic_survey_kwd = "Kinetic-Demographic")
-# gather all the active highlighting data
-active_highlighting_bio_t1 <- get_survey_data(selected_kinetic_survey_kwd = "Kinetic-Active highlighting - Biology")
-
-generate_survey_metadata_readme()
-
+# Loop through the different surveys
+trait_complex_surveys <- lapply(kinetic_study_names, function(study){
+    get_survey_data(selected_kinetic_survey_kwd = study)
+})
+# Add the names of each survey based on the list of relevant surveys
+names(trait_complex_surveys) <- kinetic_study_names
 
 
-
-# demographics_clean <- preprocess_demographics(demographics)
-demographics_clean <- preprocess_qualtrics_df(demographics)
-
-IDT <- get_survey_data(selected_kinetic_survey_kwd = "IDT")
-IDT_clean <- preprocess_qualtrics_df(IDT)
-
-# For all surveys
-all_surveys <- lapply(71:nrow(kinetic_surveys), function(idx){
-    survey_id <- kinetic_surveys$id[idx]
-
-    print(paste("The survey ID for", kinetic_surveys$name[idx], "is", survey_id,
-                ". Please save this as a variable."))
-    survey_data <-  tryCatch({
-        fetch_survey(surveyID = survey_id, verbose = FALSE) %>%
-            mutate(survey_id = survey_id)
-
-    }, error = function(err){
-        message(paste("Survey does not seem to exist:", survey_id))
-        message("Here's the original error message:")
-        message(conditionMessage(err))
-        # Choose a return value in case of error
-        NULL
-        })
-    if(!is.null(survey_data)){
-        survey_data <- survey_data %>%
-            janitor::clean_names(case = "snake")
-        # Extract questions
-        # questions <- extract_colmap(survey_data)
-        #
-        # print(paste(c("This is row", idx)))
-        # question_csv_fname <- paste0("~/Box Sync/Kinetic/survey_questions/", survey_id,
-        #                              "_questions_", Sys.Date(), ".csv")
-
-        # Export questions as a csv
-        # questions %>%
-        #     write_csv(question_csv_fname)
-
-        survey_clean <- tryCatch({
-            preprocess_qualtrics_df(survey_data)
-        }, error = function(err_preproc){
-            message(paste("Preproc failed:", survey_id, kinetic_surveys$name[idx]))
-            message("Here's the original error message:")
-            message(conditionMessage(err_preproc))
-            # Choose a return value in case of error
-            NULL
-        })
-
-    }
-
-    return(survey_clean)
+trait_surveys_cleaned <- lapply(trait_complex_surveys, function(survey){
+    preprocess_qualtrics_df(survey)
 })
 
 
-# User Persona ------------------------------------------------------------
-persona <- get_survey_data(selected_kinetic_survey_kwd = "Kinetic-User Persona")
-
-persona_clean <- preprocess_demographics(persona)
 
 
 
-# devtools::document(roclets = c('rd', 'collate', 'namespace', 'vignette'))
-# devtools::test()
-# devtools::check()
+
+
