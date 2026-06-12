@@ -21,7 +21,7 @@ get_survey_data <- function(selected_kinetic_survey_kwd = "Kinetic-Demographic",
 
     # Select a survey
     survey_id <- kinetic_surveys %>%
-        filter(grepl(selected_kinetic_survey_kwd, name)) %>%
+        filter(selected_kinetic_survey_kwd==name) %>%
         dplyr::select(id) %>%
         unlist(use.names = FALSE)
 
